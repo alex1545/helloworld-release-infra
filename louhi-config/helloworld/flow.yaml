@@ -1,6 +1,6 @@
 name: 'alexmogi helloworld release'
 repository:
-  url: https://github.com/alex1545/helloworld.git
+  url: https://github.com/alex1545/helloworld
   poll_interval: "1m"
   branch_filter: ['master']
 
