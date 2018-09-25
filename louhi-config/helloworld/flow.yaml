@@ -1,0 +1,26 @@
+name: 'helloworld release'
+repository:
+  url: https://cloud-release-internal.googlesource.com/louhi/codelab/helloworld
+  poll_interval: "1m"
+  branch_filter: ['^codelab-.+$']
+
+pipeline:
+  stages:
+  - stage: Build and Release helloworld
+    type: GCB
+    filename: /louhi-config/helloworld/gcb/release.yaml
+    artifacts:
+      src: 'go/src/helloworld'
+      out:
+        docker-images: 'helloworld'
+
+notifications:
+- type: Email
+  to: ["louhi-codelab@google.com"]
+  subject: '%{FLOW.NAME}: %{FLOW.BRANCH} rev:%{OPERATION.REVISION}'
+  message: |
+    The current status is %{OPERATION.STATUS}.
+    See details in %{OPERATION.LINK}
+  conditions:
+    - event_source: pipeline
+      status: [SUCCESS, FAILURE, ERROR]
