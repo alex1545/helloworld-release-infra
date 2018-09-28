@@ -1,8 +1,8 @@
-# substitutions:
-#   # _SRC_DIR and _REV are populated automatically by Louhi (from the
-#   # "artifacts:" YAML key in flow.yaml).
-#   _SRC_DIR: "%OPERATION.CHECKOUT_DIR"
-#   _REV: "%OPERATION.REVISION"
+substitutions:
+  # _SRC_DIR and _REV are populated automatically by Louhi (from the
+  # "artifacts:" YAML key in flow.yaml).
+  _SRC_DIR: "%OPERATION.CHECKOUT_DIR"
+  _REV: "%OPERATION.REVISION"
 
 timeout: '10800s'
 
@@ -11,37 +11,27 @@ tags:
 - 'release'
 
 steps:
-- name: 'gcr.io/asci-toolchain/nosla-ubuntu16_04-bazel-docker-gcloud:0.17.1'
+# Compile binary and build Docker image. The build script that comes with
+# helloworld first compiles the Go binary and then containerizes it inside a
+# Docker image.
+- name: k8s.gcr.io/addon-builder
+  id: build
+  entrypoint: 'bash'
+  dir: '${_SRC_DIR}'
   args:
-  - 'bazel'
-  - 'version'
-  id: 'version'
-  waitFor:
-  - "-" # wait for nothing - start immediately
+  - '-c'
+  - |
+    set -ex
+    echo building $_REV
+    PUSH_REGISTRY=gcr.io/$PROJECT_ID ./build.sh
 
-
-# steps:
-# # Compile binary and build Docker image. The build script that comes with
-# # helloworld first compiles the Go binary and then containerizes it inside a
-# # Docker image.
-# - name: k8s.gcr.io/addon-builder
-#   id: build
-#   entrypoint: 'bash'
-#   dir: '${_SRC_DIR}'
-#   args:
-#   - '-c'
-#   - |
-#     set -ex
-#     echo building $_REV
-#     PUSH_REGISTRY=gcr.io/$PROJECT_ID ./build.sh
-
-# # Test the image. Ideally this would invoke some unit tests.
-# - name: k8s.gcr.io/addon-builder
-#   id: test
-#   entrypoint: 'bash'
-#   dir: '${_SRC_DIR}'
-#   args:
-#   - '-c'
-#   - |
-#     set -ex
-#     ./test.sh
+# Test the image. Ideally this would invoke some unit tests.
+- name: k8s.gcr.io/addon-builder
+  id: test
+  entrypoint: 'bash'
+  dir: '${_SRC_DIR}'
+  args:
+  - '-c'
+  - |
+    set -ex
+    ./test.sh
