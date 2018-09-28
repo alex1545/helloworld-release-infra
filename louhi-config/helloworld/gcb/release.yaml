@@ -11,27 +11,37 @@ tags:
 - 'release'
 
 steps:
-# Compile binary and build Docker image. The build script that comes with
-# helloworld first compiles the Go binary and then containerizes it inside a
-# Docker image.
-- name: k8s.gcr.io/addon-builder
-  id: build
-  entrypoint: 'bash'
-  dir: '${_SRC_DIR}'
+- name: 'gcr.io/cloud-builders/bazel'
   args:
-  - '-c'
-  - |
-    set -ex
-    echo building $_REV
-    PUSH_REGISTRY=gcr.io/$PROJECT_ID ./build.sh
+  - 'bazel'
+  - 'version'
+  id: 'version'
+  waitFor:
+  - "-" # wait for nothing - start immediately
 
-# Test the image. Ideally this would invoke some unit tests.
-- name: k8s.gcr.io/addon-builder
-  id: test
-  entrypoint: 'bash'
-  dir: '${_SRC_DIR}'
-  args:
-  - '-c'
-  - |
-    set -ex
-    ./test.sh
+
+# steps:
+# # Compile binary and build Docker image. The build script that comes with
+# # helloworld first compiles the Go binary and then containerizes it inside a
+# # Docker image.
+# - name: k8s.gcr.io/addon-builder
+#   id: build
+#   entrypoint: 'bash'
+#   dir: '${_SRC_DIR}'
+#   args:
+#   - '-c'
+#   - |
+#     set -ex
+#     echo building $_REV
+#     PUSH_REGISTRY=gcr.io/$PROJECT_ID ./build.sh
+
+# # Test the image. Ideally this would invoke some unit tests.
+# - name: k8s.gcr.io/addon-builder
+#   id: test
+#   entrypoint: 'bash'
+#   dir: '${_SRC_DIR}'
+#   args:
+#   - '-c'
+#   - |
+#     set -ex
+#     ./test.sh
