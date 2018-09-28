@@ -1,8 +1,8 @@
-name: 'alexmogi helloworld release'
+name: 'alexmogi GitHub helloworld release'
 repository:
   url: https://github.com/alex1545/helloworld
   poll_interval: "1m"
-  branch_filter: ['master']
+  branch_filter: ['^master$']
 
 pipeline:
   stages:
