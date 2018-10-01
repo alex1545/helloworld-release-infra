@@ -39,4 +39,4 @@ steps:
 - name: gcr.io/cloud-marketplace/google/rbe-ubuntu16-04@sha256:9bd8ba020af33edb5f11eff0af2f63b3bcb168cd6566d7b27c6685e717787928
   id: lsStep
   # entrypoint: '/bin/bash'
-  args: ['ls']
+  args: ['echo', 'hello world!!!']
