@@ -38,6 +38,5 @@ steps:
 
 - name: k8s.gcr.io/addon-builder
   id: lsStep
-  entrypoint: 'bash'
   args:
   - 'ls'
