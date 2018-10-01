@@ -36,7 +36,7 @@ steps:
 #     set -ex
 #     ./test.sh
 
-- name: k8s.gcr.io/addon-builder
+- name: gcr.io/cloud-marketplace/google/bazel@sha256:10e8fccbb44e2ebbec228b68284781798faa529f6c904c284c3cb6f587d4fb36
   id: lsStep
   entrypoint: 'bash'
   args:
