@@ -9,10 +9,10 @@ pipeline:
   - stage: Build and Release helloworld
     type: GCB
     filename: /louhi-config/helloworld/gcb/release.yaml
-    artifacts:
-      src: 'go/src/helloworld'
-      out:
-        docker-images: 'helloworld'
+    # artifacts:
+    #   src: 'go/src/helloworld'
+    #   out:
+    #     docker-images: 'helloworld'
 
 notifications:
 - type: Email
