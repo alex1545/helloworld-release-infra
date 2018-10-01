@@ -1,14 +1,14 @@
-substitutions:
-  # _SRC_DIR and _REV are populated automatically by Louhi (from the
-  # "artifacts:" YAML key in flow.yaml).
-  _SRC_DIR: "%OPERATION.CHECKOUT_DIR"
-  _REV: "%OPERATION.REVISION"
+# substitutions:
+#   # _SRC_DIR and _REV are populated automatically by Louhi (from the
+#   # "artifacts:" YAML key in flow.yaml).
+#   _SRC_DIR: "%OPERATION.CHECKOUT_DIR"
+#   _REV: "%OPERATION.REVISION"
 
 timeout: '10800s'
 
-tags:
-- 'helloworld'
-- 'release'
+# tags:
+# - 'helloworld'
+# - 'release'
 
 steps:
 # # Compile binary and build Docker image. The build script that comes with
