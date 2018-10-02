@@ -36,7 +36,12 @@ steps:
 #     set -ex
 #     ./test.sh
 
-- name: gcr.io/cloud-marketplace/google/rbe-ubuntu16-04@sha256:9bd8ba020af33edb5f11eff0af2f63b3bcb168cd6566d7b27c6685e717787928
-  id: lsStep
-  # entrypoint: '/bin/bash'
-  args: ['echo', 'hello world!!!']
+# - name: gcr.io/cloud-marketplace/google/rbe-ubuntu16-04@sha256:9bd8ba020af33edb5f11eff0af2f63b3bcb168cd6566d7b27c6685e717787928
+#   id: lsStep
+#   # entrypoint: '/bin/bash'
+#   args: ['echo', 'hello world!!!']
+
+- name: 'gcr.io/cloud-builders/bazel@sha256:e99cdd0fd414e5a7745ba517a026911e6c9673433df53a2c0a007d3900879a5b'
+  id: 'bazelVersionCheck'
+  entrypoint: 'bash'
+  args: ['bazel', 'version']
