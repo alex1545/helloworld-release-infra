@@ -4,7 +4,7 @@
 #   _SRC_DIR: "%OPERATION.CHECKOUT_DIR"
 #   _REV: "%OPERATION.REVISION"
 
-timeout: '10800s'
+timeout: '21600s'
 
 # tags:
 # - 'helloworld'
@@ -41,7 +41,15 @@ steps:
 #   # entrypoint: '/bin/bash'
 #   args: ['echo', 'hello world!!!']
 
+# - name: 'gcr.io/cloud-builders/bazel@sha256:e99cdd0fd414e5a7745ba517a026911e6c9673433df53a2c0a007d3900879a5b'
+#   id: 'bazelVersionCheck'
+#   entrypoint: 'bash'
+#   args: ['bazel', 'version']
+
 - name: 'gcr.io/cloud-builders/bazel@sha256:e99cdd0fd414e5a7745ba517a026911e6c9673433df53a2c0a007d3900879a5b'
-  id: 'bazelVersionCheck'
-  entrypoint: 'bash'
-  args: ['bazel', 'version']
+    args:
+    - 'bazel'
+    - 'version'
+    id: 'version'
+    waitFor:
+    - "-" # wait for nothing - start immediately
