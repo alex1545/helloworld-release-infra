@@ -46,7 +46,7 @@ steps:
 #   entrypoint: 'bash'
 #   args: ['bazel', 'version']
 
-- name: 'gcr.io/cloud-builders/bazel@sha256:e99cdd0fd414e5a7745ba517a026911e6c9673433df53a2c0a007d3900879a5b'
+  - name: 'gcr.io/cloud-builders/bazel@sha256:e99cdd0fd414e5a7745ba517a026911e6c9673433df53a2c0a007d3900879a5b'
     args:
     - 'bazel'
     - 'version'
