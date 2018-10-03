@@ -59,14 +59,15 @@ steps:
   # - name: 'gcr.io/cloud-builders/bazel@sha256:1e8195b0f8a0f969f6e82cabcb57459bf141fe5acf1735a05d0a94701c8483d1'
     # entrypoint: 'bash'
   - name: 'gcr.io/asci-toolchain/nosla-ubuntu16_04-bazel-docker-gcloud:0.17.1'
-    args: ['version']
+    args: ['bazel', 'version']
     id: 'version'
     waitFor:
     - "-" # wait for nothing - start immediately
 
-  - name: 'gcr.io/cloud-marketplace/google/bazel@sha256:5f5c71668e8c03267f392fb7f2bde31bab4f828990306c8dc2eeac9ecd220e3e'
+  # - name: 'gcr.io/cloud-marketplace/google/bazel@sha256:5f5c71668e8c03267f392fb7f2bde31bab4f828990306c8dc2eeac9ecd220e3e'
   # - name: 'gcr.io/cloud-builders/bazel@sha256:1e8195b0f8a0f969f6e82cabcb57459bf141fe5acf1735a05d0a94701c8483d1'  
     # dir: '/home'
+  - name: 'gcr.io/asci-toolchain/nosla-ubuntu16_04-bazel-docker-gcloud:0.17.1'
     entrypoint: 'git'
     args: ['clone', 'https://github.com/alex1545/bazel-container']
     id: 'clone-repo'
@@ -74,10 +75,11 @@ steps:
     - 'version'
 
 
-  - name: 'gcr.io/cloud-marketplace/google/bazel@sha256:5f5c71668e8c03267f392fb7f2bde31bab4f828990306c8dc2eeac9ecd220e3e'
+  # - name: 'gcr.io/cloud-marketplace/google/bazel@sha256:5f5c71668e8c03267f392fb7f2bde31bab4f828990306c8dc2eeac9ecd220e3e'
   # - name: 'gcr.io/cloud-builders/bazel@sha256:1e8195b0f8a0f969f6e82cabcb57459bf141fe5acf1735a05d0a94701c8483d1'
+  - name: 'gcr.io/asci-toolchain/nosla-ubuntu16_04-bazel-docker-gcloud:0.17.1'
     entrypoint: 'ls'
-    args: ['bazel-container']
+    args: ['/workspace']
     id: 'lsStep'
     waitFor:
       - 'clone-repo'
