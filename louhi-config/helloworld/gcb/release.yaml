@@ -46,6 +46,7 @@ steps:
 #   entrypoint: 'bash'
 #   args: ['bazel', 'version']
 
+  # Step: print the bazel version for confirmation
   - name: 'gcr.io/cloud-builders/bazel@sha256:e99cdd0fd414e5a7745ba517a026911e6c9673433df53a2c0a007d3900879a5b'
     entrypoint: 'bash'
     args:
@@ -54,3 +55,21 @@ steps:
     id: 'version'
     waitFor:
     - "-" # wait for nothing - start immediately
+
+  # Step: build the fully loaded container using rules_docker
+  - name: 'gcr.io/cloud-builders/bazel@sha256:e99cdd0fd414e5a7745ba517a026911e6c9673433df53a2c0a007d3900879a5b'
+    entrypoint: 'bash'
+    # Set Bazel output_base to /workspace, which is a mounted directory on Google Cloud Builder.
+    # This is to make sure Bazel generated files can be accessed by multiple containers.
+    args: [
+      'bazel',
+      '--output_base=/workspace',
+      'run' ,
+      '--verbose_failures',
+      '--spawn_strategy=standalone',
+      '--genrule_strategy=standalone',
+      '//container/ubuntu16_04/builders/bazel:bazel_0.17.1'
+    ]
+    id: 'container-build'
+    waitFor:
+    - 'version'
