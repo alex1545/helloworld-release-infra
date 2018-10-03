@@ -97,6 +97,7 @@ steps:
     # Set Bazel output_base to /workspace, which is a mounted directory on Google Cloud Builder.
     # This is to make sure Bazel generated files can be accessed by multiple containers.
     args: [
+      'bazel',
       '--output_base=/workspace',
       'run',
       '--verbose_failures',
