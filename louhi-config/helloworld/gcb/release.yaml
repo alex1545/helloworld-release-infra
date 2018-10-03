@@ -77,43 +77,35 @@ steps:
 
   # - name: 'gcr.io/cloud-marketplace/google/bazel@sha256:5f5c71668e8c03267f392fb7f2bde31bab4f828990306c8dc2eeac9ecd220e3e'
   # - name: 'gcr.io/cloud-builders/bazel@sha256:1e8195b0f8a0f969f6e82cabcb57459bf141fe5acf1735a05d0a94701c8483d1'
-  - name: 'gcr.io/asci-toolchain/nosla-ubuntu16_04-bazel-docker-gcloud:0.17.1'
-    entrypoint: 'ls'
-    args: ['/workspace']
-    id: 'lsStep'
-    waitFor:
-      - 'clone-repo'
-
-
-
-
-  # - name: 'gcr.io/cloud-builders/bazel@sha256:1e8195b0f8a0f969f6e82cabcb57459bf141fe5acf1735a05d0a94701c8483d1'
-  #   entrypoint: 'cd'
-  #   args: ['/workspace/bazel-container']
-  #   id: 'cd-into-repo'
+  # - name: 'gcr.io/asci-toolchain/nosla-ubuntu16_04-bazel-docker-gcloud:0.17.1'
+  #   entrypoint: 'ls'
+  #   args: ['/workspace']
+  #   id: 'lsStep'
   #   waitFor:
-  #     - 'lsStep'
+  #     - 'clone-repo'
 
 
 
-  # # Step: build the fully loaded container using rules_docker
+
+
+
+  # Step: build the fully loaded container using rules_docker
   # - name: 'gcr.io/cloud-marketplace/google/bazel@sha256:5f5c71668e8c03267f392fb7f2bde31bab4f828990306c8dc2eeac9ecd220e3e'
-  # # - name: 'gcr.io/cloud-builders/bazel@sha256:1e8195b0f8a0f969f6e82cabcb57459bf141fe5acf1735a05d0a94701c8483d1'
-  #   dir: '/workspace/bazel-container'
-  # # - name: 'gcr.io/asci-toolchain/nosla-ubuntu16_04-bazel-docker-gcloud:0.17.1'
-  #   # entrypoint: 'pwd'
-  #   # Set Bazel output_base to /workspace, which is a mounted directory on Google Cloud Builder.
-  #   # This is to make sure Bazel generated files can be accessed by multiple containers.
-  #   args: [
-  #     # '--output_base=/workspace',
-  #     'run',
-  #     '--verbose_failures',
-  #     '--spawn_strategy=standalone',
-  #     '--genrule_strategy=standalone',
-  #     '//container/ubuntu16_04/builders/bazel:bazel_0.17.1'
-  #   ]
-  #   id: 'container-build'
-  #   waitFor:
-  #   - 'lsStep'
+  # - name: 'gcr.io/cloud-builders/bazel@sha256:1e8195b0f8a0f969f6e82cabcb57459bf141fe5acf1735a05d0a94701c8483d1'
+  - name: 'gcr.io/asci-toolchain/nosla-ubuntu16_04-bazel-docker-gcloud:0.17.1'
+    dir: 'bazel-container'
+    # Set Bazel output_base to /workspace, which is a mounted directory on Google Cloud Builder.
+    # This is to make sure Bazel generated files can be accessed by multiple containers.
+    args: [
+      '--output_base=/workspace',
+      'run',
+      '--verbose_failures',
+      '--spawn_strategy=standalone',
+      '--genrule_strategy=standalone',
+      '//container/ubuntu16_04/builders/bazel:bazel_0.17.1'
+    ]
+    id: 'container-build'
+    waitFor:
+    - 'clone-repo'
 
 
